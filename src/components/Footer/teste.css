@@ -1,0 +1,141 @@
+/* #menu-menu-cliente, */
+#menu-menu-hotel,
+#menu-nossas-empresas,
+#menu-menu-hotel,
+#menu-nossas-solucoes{
+	padding: 0;
+	list-style: none;
+	text-align: center;
+}
+@media screen and (min-width: 768px){
+    /* #menu-menu-cliente, */
+	#menu-menu-hotel,
+    #menu-nossas-empresas,
+    #menu-menu-hotel,
+    #menu-nossas-solucoes{
+		display: inline-block;
+		text-align: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+	}
+    #menu-nossas-empresas,
+    #menu-nossas-solucoes{
+        justify-content: left;
+	}
+
+    /* #menu-menu-cliente li, */
+	#menu-menu-hotel li{
+        display: inline;
+		margin: 0 15px;
+        position: relative;
+	}
+
+    /* #menu-menu-cliente li:not(:first-child):after, */
+    #menu-menu-hotel li:not(:first-child):after{
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 25px;
+        background: #6cc1d7;
+        top: -2px;
+        right: -15px;
+    }
+
+    #menu-nossas-empresas:after,
+    #menu-nossas-solucoes:after{
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 25px;
+        background: #6cc1d7;
+        top: -2px;
+        right: -15px;
+    }
+}
+/* #menu-menu-cliente li a, */
+#menu-menu-hotel li a,
+#menu-nossas-empresas li a,
+#menu-menu-hotel li a,
+#menu-nossas-solucoes li a{
+	text-transform: uppercase;
+    color: #343434;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+}
+#cliente-menu-empresas #menu-nossas-empresas,
+#afiliado-menu-empresas #menu-nossas-empresas,
+#cliente-menu-empresas #menu-nossas-solucoes,
+#afiliado-menu-empresas #menu-nossas-solucoes{
+    position: relative;
+}
+#cliente-menu-empresas #menu-nossas-empresas .sub-menu,
+#cliente-menu-empresas #menu-nossas-solucoes .sub-menu{
+    display: none;
+    position: absolute;
+    background: #343434;
+    list-style: none;
+    padding: 0.5rem;
+    font-size: 12px;
+    width: 200px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+#cliente-menu-empresas #menu-nossas-empresas .sub-menu li a,
+#cliente-menu-empresas #menu-nossas-solucoes .sub-menu li a{
+    color: #fff;
+}
+#afiliado-menu-empresas #menu-nossas-empresas .sub-menu,
+#afiliado-menu-empresas #menu-nossas-solucoes .sub-menu{
+    display: none;
+    position: absolute;
+    background: #fff;
+    list-style: none;
+    padding: 0.5rem;
+    font-size: 12px;
+    width: 200px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+#afiliado-menu-empresas #menu-nossas-empresas .sub-menu li a,
+#afiliado-menu-empresas #menu-nossas-solucoes .sub-menu li a{
+    color: #343434;
+}
+#cliente-menu-empresas #menu-nossas-empresas:hover .sub-menu,
+#cliente-menu-empresas #menu-nossas-empresas:active .sub-menu,
+#afiliado-menu-empresas #menu-nossas-empresas:hover .sub-menu,
+#afiliado-menu-empresas #menu-nossas-empresas:active .sub-menu,
+#cliente-menu-empresas #menu-nossas-solucoes:hover .sub-menu,
+#cliente-menu-empresas #menu-nossas-solucoes:active .sub-menu,
+#afiliado-menu-empresas #menu-nossas-solucoes:hover .sub-menu,
+#afiliado-menu-empresas #menu-nossas-solucoes:active .sub-menu{
+    display: block;
+}
+
+#menu-item-750,
+#menu-item-327{
+    text-align: center;
+    background: #6CC3D9;
+    padding: 0 0.6rem;
+}
+#menu-item-750 a,
+#menu-item-327 a{
+    color: #fff!important;
+}
+
+.elementor-element-27e7c38 .hotel-registrar-cliente .wpcf7-list-item.first{
+	margin: 0;
+}
+
+
+#cliente-cadastro-btn{
+    padding: .5rem 0;
+    background: #fff;
+}
+#cliente-login-btn,
+#hotel-login-btn{
+    padding: .5rem 0;
+    background: #6CC3D9;
+}
