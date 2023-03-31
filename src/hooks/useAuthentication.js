@@ -7,51 +7,52 @@
 import { db } from '../firebase/config'
 
 import {
-    getAuth, 
+    getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    updateProfile, 
+    updateProfile,
     signOut
 } from 'firebase/auth'
 
 import { useState, useEffect } from 'react'
+import { async } from '@firebase/util'
 
 // vou criar a função do hook já com export para poder utlizar em outros lugares
 
 export const useAuthentication = () => {
-     const [error, setError] = useState(null)
-     const [loading, setLoading] = useState(null)
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(null)
 
-     // instrução cleanup = neste projeto terei muitas mudanças de componentes entre páginas, e dessa forma não posso deixar resquicios de funções sendo executadas. 
-     // deal with memory leak 
-     // a função sera para cancelar as funções apos elas terem dado certo. 
-     const [cancelled, setCancelled] = useState(false)
+    // instrução cleanup = neste projeto terei muitas mudanças de componentes entre páginas, e dessa forma não posso deixar resquicios de funções sendo executadas. 
+    // deal with memory leak 
+    // a função sera para cancelar as funções apos elas terem dado certo. 
+    const [cancelled, setCancelled] = useState(false)
 
 
-     //getAuth nada mais é do que uma requisição bem rapida para confirmar que o usuário esta logado, ai conseguimos prosseguir no sistema
+    //getAuth nada mais é do que uma requisição bem rapida para confirmar que o usuário esta logado, ai conseguimos prosseguir no sistema
 
-     const auth = getAuth()
+    const auth = getAuth()
 
-     function checkIfIsCancelled () {
+    function checkIfIsCancelled() {
         if (cancelled) {
             return;
         }
-     }
+    }
 
-     const createUser = async (data) => {
+    const createUser = async (data) => {
         checkIfIsCancelled()
 
         setLoading(true);
         setError(null);
 
         try {
-            
-            const {user} = await createUserWithEmailAndPassword(
+
+            const { user } = await createUserWithEmailAndPassword(
                 auth,
-                data.email, 
+                data.email,
                 data.password
             )
-            
+
             await updateProfile(user, {
                 displayName: data.displayName
             })
@@ -65,9 +66,9 @@ export const useAuthentication = () => {
 
             let systemErrorMessage
 
-            if(error.message.includes("Password")) {
+            if (error.message.includes("Password")) {
                 systemErrorMessage = "Asenha precisa conter pelo menos 6 caracteres!"
-            } else if (error.message.includes("email-already")){
+            } else if (error.message.includes("email-already")) {
                 systemErrorMessage = "E-mail já cadastrado!"
             } else {
                 systemErrorMessage = "Ocorreu um erro, por favor tente mais tarde!"
@@ -77,20 +78,52 @@ export const useAuthentication = () => {
 
         }
 
-        
-     }
+
+    };
+    //logou - sign out
+    const logout = () => {
+        checkIfIsCancelled()
+        signOut(auth)
+    }
+
+    //login - sinin
+
+    const login = async (data) => {
+        checkIfIsCancelled()
+        setLoading(true)
+        setError(false)
+
+        try {
+            await signInWithEmailAndPassword(auth, data.email, data.password)
+            setLoading(false)
+        } catch (error) {
+            let systemErrorMessage;
+            if (error.message.includes("Password")) {
+                systemErrorMessage = 'Usuário não existe'
+            } else if (error.message.includes("wrong-password")){
+                systemErrorMessage = "senha incorreta"
+            } else {
+                systemErrorMessage = 'ocorreu um erro, por favor tente mais tarde'
+            }
+
+            setError(systemErrorMessage);
+            setLoading(false);
+        }
+    }
 
     useEffect(() => {
         return () => setCancelled(true);
-    }, [])     
+    }, [])
 
 
-     return {
-        auth, 
+    return {
+        auth,
         createUser,
         error,
         loading,
-     };
+        logout,
+        login,
+    };
 
 }
 

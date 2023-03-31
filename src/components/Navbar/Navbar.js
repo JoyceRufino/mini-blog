@@ -1,19 +1,24 @@
 import { NavLink } from 'react-router-dom'
 
+// para fazer a função de Logout
 import { useAuthentication } from '../../hooks/useAuthentication'
- import { useAuthValue } from '../../context/AuthContext'
+
+// para pegar o valor do contexto
+import { useAuthValue } from '../../context/AuthContext'
 
 import styles from './Navbar.module.css'
 
 const Navbar = () => {
 
-  const {user} = useAuthValue();
+  // pega o usuario que esta sendo compartilhado no Provider  (que eu só tenho acesso depois que carrega tudo - loading)
+  const { user } = useAuthValue();
+  const {logout} = useAuthentication()
 
   return (
     <>
       <nav className={styles.navbar}>
         <NavLink to='/' className={styles.brand}>
-            Mini <span>Blog</span>
+          Mini <span>Blog</span>
         </NavLink>
         <ul className={styles.links_list}>
           <li>
@@ -21,32 +26,35 @@ const Navbar = () => {
               Home
             </NavLink>
           </li>
+
+          {/* Se não tiver usuário, exibir Entrar e Cadastrar */}
           {!user && (
             <>
-            <li>
-              <NavLink to="/login" className={({ isActive }) => (isActive ? styles.active : "")} >
-                Entrar
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/register" className={({ isActive }) => (isActive ? styles.active : "")} >
-                Cadastrar
-              </NavLink>
-            </li>
+              <li>
+                <NavLink to="/login" className={({ isActive }) => (isActive ? styles.active : "")} >
+                  Entrar
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/register" className={({ isActive }) => (isActive ? styles.active : "")} >
+                  Cadastrar
+                </NavLink>
+              </li>
             </>
           )}
+          {/* Páginas para usuarios que estão logados */}
           {user && (
             <>
-            <li>
-              <NavLink to="/post/create" className={({ isActive }) => (isActive ? styles.active : "")} >
-                Novo Post
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/dashboard" className={({ isActive }) => (isActive ? styles.active : "")} >
-                Dashboard
-              </NavLink>
-            </li>
+              <li>
+                <NavLink to="/post/create" className={({ isActive }) => (isActive ? styles.active : "")} >
+                  Novo Post
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard" className={({ isActive }) => (isActive ? styles.active : "")} >
+                  Dashboard
+                </NavLink>
+              </li>
             </>
           )}
           <li>
@@ -54,6 +62,13 @@ const Navbar = () => {
               Sobre
             </NavLink>
           </li>
+          {
+            user && (
+              <li>
+                <button onClick={logout}>Sair</button>
+              </li>
+            )
+          }
         </ul>
       </nav>
     </>
